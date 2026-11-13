@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в систему | МИТП ЛР6</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body>
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Авторизация</h2>
+            <p>Вход в личный кабинет студента</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('login') }}" method="POST">
+            <div class="form-group">
+                <label for="username">Имя пользователя (логин)</label>
+                <input type="text" id="username" name="username" class="form-control"
+                       placeholder="Введите логин" required autofocus>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" name="password" class="form-control"
+                       placeholder="Введите пароль" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Войти в аккаунт</button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Нет учётной записи? <a href="{{ url_for('register') }}">Зарегистрироваться</a></p>
+            <p style="margin-top: 8px;"><a href="{{ url_for('dashboard') }}">Перейти в личный кабинет (закрытый маршрут)</a></p>
+        </div>
+    </div>
+</body>
+</html>
